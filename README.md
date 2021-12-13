@@ -20,6 +20,7 @@ Once docker is installed, development environment can launched, however some add
 
 **NOTE-2:** Once everything's installed, it's enough to run `docker compose up` to start working on a project, however, in case of any problems, check whether your local ip address hasn't change.
 
+**NOTE-3:** If you want to test mobile app, please type in `htttp://date.jsontest.com` address in the input field as for now it is hardcoded to fetch only one type of json key.
 ### Installing packages
 All packages should be installed with `expo install <package>`, but since project is runned with docker, package installation should be conducted inside container. Follow these steps to install package:
 - get into running container: `docker exec -it ws-mobile-app bash`
