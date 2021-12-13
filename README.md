@@ -44,4 +44,43 @@ docker system prune -f          # prune system - caches etc.
 
 ## Embedded
 
-Todo... 🥳
+### Environment configuration
+
+Shell scripts used for erasing/flashing and uploading software make use of `pipenv` and libraries stored in `requirements.txt` file, instructions how to install `pipenv` can be found [here](https://pipenv.pypa.io/en/latest/).
+
+Once pipenv is installed on a machine, change directory to `embedded` and initialize environment with 
+```bash
+cd embedded
+pipenv install -r requirements.txt
+```
+
+Then, supplement (or create) file called `.env.dev` and put there two variables `ESP_PORT` and `ESP_BAUD` - 115200 by default. Port needs to be determined manually by typing `ls -al /dev | grep usb` on *nix systems or searching device manager on windows.
+
+### Flashing micropython to new ESP8266
+Assuming there is no `micropython` binary flashed on `ESP8266`, it can be flashed with
+```bash
+cd embedded/utils
+bash erase-flash.sh
+bash flash-firmware.sh
+```
+ This step is not necessary if micropython have been flashed already.
+
+### Uploading python scripts
+Source code for weather station are listed in `/embedded/src`, those scripts can be uploaded to ESP with `/embedded/utils/upload-software.sh` script. 
+```bash
+cd embedded/utils
+bash upload-software.sh
+```
+Source files have following meaning:
+- `bme.py` - library that wraps up communication with BME280 sensor
+- `boot.py` - script that setups ESP board on boot
+- `main.py` - script that is executed right after boot, all variables initialized in `boot.py` are accessible here
+
+### Screening micropython REPL
+
+On *nix systems micropython REPL can be accessed with `screen` command:
+```bash
+screen <port> <baud>
+```
+
+On windows systems REPL can be accessed with Putty or similar utility.
