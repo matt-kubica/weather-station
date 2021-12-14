@@ -1,8 +1,15 @@
 # weather-station
+## Operating Modes
+
+<p float="left">
+  <img src="/Rys1.png" width="450" />
+  <img src="/Rys2.png" width="450" /> 
+</p>
 
 ## Mobile App
 
 ### Development
+
 
 The mobile app is built with ReactNative and Expo. To persist high level of compability it's also wrapped with docker, so the only software-related requirement to start working on a project is to have docker runtime installed. Instructions how to install docker are [here](https://docs.docker.com/get-docker/). 
 Once docker is installed, development environment can launched, however some additional steps should be taken:
