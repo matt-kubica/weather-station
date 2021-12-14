@@ -2,8 +2,8 @@
 ## Operating Modes
 
 <p float="left">
-  <img src="/Rys1.png" width="450" />
-  <img src="/Rys2.png" width="450" /> 
+  <img src="assets/image-1.png" width="450" />
+  <img src="assets/image-2.png" width="450" /> 
 </p>
 
 ## Mobile App
