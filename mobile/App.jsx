@@ -10,7 +10,7 @@ export default class App extends Component {
         super();
 
         this.state = {
-            ip: '',
+            address: '',
             fetched_data: [],
             loadingState: 1
         }
@@ -26,7 +26,7 @@ export default class App extends Component {
     }
 
     async getArticles() {
-        await fetch(this.state.ip, {method: 'GET'})
+        await fetch(this.state.address, {method: 'GET'})
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -46,9 +46,9 @@ export default class App extends Component {
                 <Text></Text>
                 <Text></Text>
                 <TextInput
-                    placeholder="Enter IP, ex: htttp://date.jsontest.com"
+                    placeholder="Enter ip and port, ex: 10.10.10.1:80"
                     returnKeyLabel={"next"}
-                    onChangeText={(text) => this.setState({ ip: text })}
+                    onChangeText={(text) => this.setState({ address: 'http://' + text })}
                 />
                 <Button title="Send request" onPress={this.handlePress.bind(this)} />
                 <StatusBar style="auto" />
@@ -59,9 +59,12 @@ export default class App extends Component {
             return (
                 //warning: for now showing fetched_data is hardcoded, this is for change when json keys specified
                 <View style={styles.container}>
-                    <Text>{this.state.fetched_data.date}</Text>
+                    <Text>Temperature: {this.state.fetched_data.temperature}</Text>
+                    <Text>Humidity: {this.state.fetched_data.humidity}</Text>
+                    <Text>Pressure: {this.state.fetched_data.pressure}</Text>
                     <Text></Text>
-                    <Button title="<" onPress={this.exit.bind(this)} />
+                    <Button title="Go back" onPress={this.exit.bind(this)} />
+                    <Button title="Refresh" onPress={this.handlePress.bind(this)} />
                 </View>
             );
         }
@@ -70,7 +73,7 @@ export default class App extends Component {
                 <View style={styles.container}>
                     <Text>Sorry, something went wrong, try again</Text>
                     <Text></Text>
-                    <Button title="<" onPress={this.exit.bind(this)} />
+                    <Button title="Try again" onPress={this.exit.bind(this)} />
                 </View>
 
             );

@@ -1,16 +1,38 @@
+from time import sleep
+import ujson as json
+import usocket as socket
+
+from boot import station
+from machine import Pin, I2C
+from bme import BME280
+i2c = I2C(scl=Pin(5), sda=Pin(4), freq=10000)
+bme = BME280(i2c=i2c)
 
 
-HEADER_LINE = '--- ESP8266 Micropython Wheather Station on {0} ---'
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('', 80))
+s.listen(5)
 
-print('Micropython initialized')
+print('--- ESP8266 Micropython Wheather Station on {0} ---'.format(station.ifconfig()[0]))
 while True:
-	inet_address = station.ifconfig()[0]
-	populated_header = HEADER_LINE.format(inet_address)
+	conn, addr = s.accept()
+	request = conn.recv(1024)
+	print('Got a request from {0}'.format(addr))
 
-	print(populated_header)
-	print('\tTemperature: {0}'.format(bme.temperature))
-	print('\tHumidity: {0}'.format(bme.humidity))
-	print('\tPressure: {0}'.format(bme.pressure))
-	print('-' * len(populated_header))
+	data = {
+	  'temperature': bme.temperature,
+	  'humidity': bme.humidity,
+	  'pressure': bme.pressure
+  	}
 
-	sleep(5)
+	print('-- DATA -----------------------------------')
+	print('\tTemperature: {0}'.format(data['temperature']))
+	print('\tHumidity: {0}'.format(data['humidity']))
+	print('\tPressure: {0}'.format(data['pressure']))
+	print('\n')
+
+	conn.send('HTTP/1.1 200 OK\n')
+	conn.send('Content-Type: application/json\n')
+	conn.send('Connection: close\n\n')
+	conn.sendall(json.dumps(data))
+	conn.close()
