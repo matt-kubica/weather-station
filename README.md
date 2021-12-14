@@ -4,6 +4,7 @@
 
 ### Development
 ![Alt text](Rys1.png)
+![Alt text](Rys2.png) <br />
 The mobile app is built with ReactNative and Expo. To persist high level of compability it's also wrapped with docker, so the only software-related requirement to start working on a project is to have docker runtime installed. Instructions how to install docker are [here](https://docs.docker.com/get-docker/). 
 Once docker is installed, development environment can launched, however some additional steps should be taken:
 - install ExpoGo app on a mobile device
